@@ -1,3 +1,36 @@
+::-webkit-scrollbar {
+	width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+	opacity: 0.2;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background:#c7c7c7; 
+	border-radius:10px;
+	opacity: 0.5;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+  }
+@keyframes editNoteAnimation {
+	from {opacity: 0;}
+	to {opacity: 1;}
+   }
+   @keyframes editNoteBackground {
+	0% {
+		background-color: white;
+	}
+	100% {
+		background-color: #202124;
+	}
+   }
 * {
   padding: 0;
   margin: 0;
@@ -20,6 +53,7 @@ header h1{
 	font-size:xxx-large;
 }
 .note h1 {
+	pointer-events: none;
   font-size: 1.1em;
   margin-bottom: 6px;
 }
@@ -38,14 +72,17 @@ form input{
 	width: 80%;
 	font-family: inherit;
 }
-
+.note:hover{
+	box-shadow: 0 1px 5px rgb(138 137 137);
+}
 .note p {
   font-size: 1.1em;
   margin-bottom: 6px;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-.note button{
+#delete-button,.save,.close{
+	font-size: 0.9em;
 	background: none;
 	border:none;
 	width: 50px;
@@ -54,11 +91,13 @@ form input{
 	margin:5px -13px 3px 0px;
 	outline:none;
 }
-.note button :hover{
+#delete-button:hover,.save:hover,.close:hover {
+	/* box-shadow:0; */
 	transition-duration: 0.2s;
 	transform:scale(1.2); 
 }
 .note h5{
+	/* pointer-events: none; */
 	margin-bottom: -10px;
 	margin-right:10px; 
 }
@@ -85,7 +124,7 @@ footer p{
 	border-radius: 50%;
 	border:none;
 }
-form button{
+form .addIcon{
 	position: absolute;
 	border-radius: 50%;
 	width: 36px;
@@ -121,4 +160,63 @@ form {
 }
 .hidden-content{
 	display: none;
+}
+.editable-card-background{
+	position: fixed;
+	background-color: black;
+	opacity: 0.7;
+	height: 100%;
+	width:100%;
+	top: 0;
+	left: 0;
+	animation-name: editNoteBackground;
+	/* animation-duration: 0.1s; */
+}
+.editableForm{
+	position:fixed;
+	text-align: center;
+	top: 18%;
+	left: 30%;
+	background-color: white;
+	border-radius: 10px;
+	height: 40%;
+	width: 40%;
+	min-height: 200px;
+	animation-name: editNoteAnimation;
+	animation-duration: 0.3s;
+}
+.editableTitle{
+	width: 100%;
+  	border: none;
+  	padding: 5px;
+	
+  	outline: none;
+  	font-size: 1.2em;
+  	font-family: inherit;
+  	resize: none;
+}
+.editableContent{
+	padding-top: 10px;
+	width:100%;
+	height: 60%;
+	/* height: 100%; */
+	overflow: auto;
+}
+.save{
+	position:absolute;
+	left: 5%;
+	bottom: 2%;
+}
+.save h5{
+	font-family: monospace;
+	font-size: 1.2em;
+}
+.close h5{
+	font-family: monospace;
+	font-size: 1.2em;
+}
+.close{
+	position:absolute;
+	right: 5%;
+	bottom: 2%;
 }
