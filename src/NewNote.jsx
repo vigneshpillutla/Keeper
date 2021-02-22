@@ -6,7 +6,6 @@ function NewNote(props){
 	}); 
 	const [newNoteClass,setNewNoteClass] = useState("hidden-content")
 	const newNoteRef = useRef();
-	console.log(newNoteClass);
 	function handleDocumentClick(event){
 		let clickedComponent = event.target
 		let targetDiv=newNoteRef.current
@@ -23,7 +22,7 @@ function NewNote(props){
 		return ()=>{
 			document.removeEventListener('click',handleDocumentClick)
 		}
-	})
+	},[])
 	function updateFormState(event){
 		let {value:newValue,name:elementName} = event.target;
 		setFormState((prevValue)=>{
@@ -56,7 +55,7 @@ function NewNote(props){
 		    <div ref={newNoteRef}>
 				<input className="noteTitle" onChange={updateFormState} autoComplete="off"  name="title" type="search" placeholder="Title" value={formState.noteTitle}></input>
 				<div className={newNoteClass}>
-					<textarea onChange={updateFormState} name="content" id="" cols="40" rows="2" placeholder="Write a note..." value={formState.noteContent}></textarea>
+					<textarea className="newNoteTextArea" onChange={updateFormState} name="content" id="" cols="40" rows="2" placeholder="Write a note..." value={formState.noteContent}></textarea>
 					<button className="addIcon" type="submit">+</button>
 				</div>
 			</div>
