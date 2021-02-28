@@ -19,21 +19,21 @@ function EditableNote(props){
     function handleChange(event){
         let {value:newValue,name:elementName} = event.target;
         setNoteData((prevValue)=>{
-			if(elementName==="title"){
-				return {
-					title:newValue,
-					content:prevValue.content,
+            if(elementName==="title"){
+                return {
+                    title:newValue,
+                    content:prevValue.content,
                     key:key
-				};
-			}
-			else{
-				return {
-					title:prevValue.title,
-					content:newValue,
+                };
+            }
+            else{
+                return {
+                    title:prevValue.title,
+                    content:newValue,
                     key:key
-				};
-			}
-		});
+                };
+            }
+        });
     }
     function handleFormSubmit(event) {
         saveNote(noteData)
