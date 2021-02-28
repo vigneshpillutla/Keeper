@@ -46,8 +46,8 @@ function EditableNote(props){
             <form onSubmit={handleFormSubmit} className="editableForm" method="POST" autoComplete="off">
                 <input onChange={handleChange} name="title" className="editableTitle" type="text" placeholder="Title" value={noteData.title}/>
                 <textarea onChange={handleChange} className="editableContent" name="content"  value={noteData.content}></textarea>
-                <button className="save" type="submit"><h5>Save</h5></button>
-                <button className="close" onClick={()=>{onBackgroundClick(-1,true);}} type="button"><h5>close</h5></button>
+                <button className="save" type="submit"><h5>SAVE</h5></button>
+                <button className="close" onClick={()=>{onBackgroundClick(-1,true);}} type="button"><h5>CLOSE</h5></button>
             </form>
         </div>
     );
