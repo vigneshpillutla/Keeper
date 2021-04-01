@@ -20,18 +20,10 @@ function EditableNote(props){
         let {value:newValue,name:elementName} = event.target;
         setNoteData((prevValue)=>{
             if(elementName==="title"){
-                return {
-                    title:newValue,
-                    content:prevValue.content,
-                    key:key
-                };
+                return {...prevValue, title:newValue,};
             }
             else{
-                return {
-                    title:prevValue.title,
-                    content:newValue,
-                    key:key
-                };
+                return {...prevValue, content:newValue,};
             }
         });
     }

@@ -36,6 +36,16 @@
   margin: 0;
   box-sizing: border-box;
 }
+.noteTitle,
+form textarea {
+  width: 100%;
+  border: none;
+  padding: 4px;
+  outline: none;
+  font-size: 1.2em;
+  font-family: inherit;
+  resize: none;
+}
 html{
 	font-family: 'Ubuntu', sans-serif;
 }
@@ -138,17 +148,7 @@ form .addIcon{
 	box-shadow: 0 1px 5px rgb(138, 137, 137);
 	outline: none;
 }
-form input,
-form textarea {
-  width: 100%;
-  border: none;
-  padding: 4px;
-  outline: none;
-  font-size: 1.2em;
-  font-family: inherit;
-  resize: none;
-}
-form {
+.new-note-form, .editableForm{
   position: relative;
   min-width:270px;
   width: 40%;
@@ -207,16 +207,64 @@ form {
 	left: 5%;
 	bottom: 2%;
 }
-.save h5{
-	font-family: monospace;
-	font-size: 1.2em;
-}
-.close h5{
-	font-family: monospace;
-	font-size: 1.2em;
-}
+
 .close{
 	position:absolute;
 	right: 5%;
 	bottom: 2%;
 }
+.login-page{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top:0;
+	width: 100vw;
+	height: 100vh;
+	backdrop-filter: blur(2px);
+}
+.login-form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80%;
+  	max-width: 400px;
+  	max-height: 600px;
+  	border-radius: 5px;
+  	box-shadow: 0px 1px 2px rgb(138 137 137);
+	background: white;
+}
+.login-form input{
+	padding: 5px;
+	border: none;
+	border-bottom:2px solid #ffd257;
+	outline: none;
+	width:80%;
+	margin:8% 0;
+}
+.login-form input:hover, .login-form input:focus{
+	border-bottom:3px solid #f5ba13;
+}
+.login-form img{
+	width: 20%;
+	margin:8% 8%;
+}
+.login-form button{
+	outline:none;
+	border:none;
+	border-radius: 5px;
+	width: 7em;
+	height: 4em;
+	margin: 8%;
+	color: white;
+	background: #f7c02b;
+}
+.login-form button:hover{
+	background: #ecae02;
+}
+.login-form p{
+	font-size: 0.8em;
+	margin:8%;
+}
+

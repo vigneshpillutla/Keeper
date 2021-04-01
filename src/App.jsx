@@ -4,7 +4,10 @@ import Header from "./Header";
 import Note from "./Note";
 import NewNote from "./NewNote";
 import testNotes from "./notes";
-import EditableNote from "./EditableNote"
+import EditableNote from "./EditableNote";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import {BrowserRouter as Router,Route} from "react-router-dom";
 let current;
 const ACTIONS = {
     addNote:'addNote',
@@ -13,12 +16,12 @@ const ACTIONS = {
     updateState:'updateState',
 }
 function reducer(notes,data){
-    let updatedNotes=[...notes]
-    const action =data.action
+    let updatedNotes=[...notes];
+    const action =data.action;
     if(action===ACTIONS.deleteNote){
-        return updatedNotes.filter(elem=>elem.key!==data.key)
+        return updatedNotes.filter(elem=>elem.key!==data.key);
     }
-    const{key,title,content} = data	
+    const{key,title,content} = data	;
     if(action===ACTIONS.addNote){
             updatedNotes.push({
                 key:key,
@@ -36,7 +39,7 @@ function reducer(notes,data){
 
     }
     // current = updatedNotes
-    return updatedNotes
+    return updatedNotes;
 }
 function App(){
     const [notes,setNotes] = useReducer(reducer,[...testNotes]);
@@ -46,10 +49,15 @@ function App(){
         content:"",
         id:"",
     });
+    const [user,setUser] = useState({
+        loggedIn:false,
+        username:""
+    });
     useEffect(()=>{
         current=notes
-    },[notes])
-    function addNotes(title,content){
+    },[notes]);
+    function addNotes(noteData){
+        const {noteTitle:title,noteContent:content} = noteData;
         if(title!==""||content!==""){
             const key = Date.now();
             console.log(key);
@@ -94,6 +102,17 @@ function App(){
             })
         }
         
+    }
+    if(!user.loggedIn){
+        return( 
+            <Router>
+            <div>
+                <Header/>    
+                <Route path="/" exact render={(props)=><Login {...props} setUser={setUser}/>}/>
+                <Route path="/signup" render={(props)=><SignUp {...props} setUser={setUser}/>}/>
+            </div>
+            </Router>
+        );
     }
     return (
         <div>
