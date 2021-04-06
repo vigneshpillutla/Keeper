@@ -14,7 +14,7 @@ async function loginUser(credentials) {
     method: 'POST',
     headers: myHeaders,
     body: urlencoded,
-    
+    credentials:'include'
     };
 
     return fetch("http://localhost:9000/login", requestOptions)

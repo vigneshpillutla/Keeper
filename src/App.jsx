@@ -27,6 +27,7 @@ async function addModifyNoteDB(email,newNote,action){
       method: action,
       headers: myHeaders,
       body: urlencoded,
+      credentials:'include'
     }
     return fetch("http://localhost:9000/user", options)
     .then(response => response.json())
@@ -40,8 +41,24 @@ async function addModifyNoteDB(email,newNote,action){
     let options = {
       method: 'GET',
       headers: myHeaders,
+    credentials:'include'
+
     }
     return fetch("http://localhost:9000/user?email="+email, options)
+    .then(response => response.json())
+    .then(result => result)
+    .catch(error => console.log('error', error));
+  }
+  async function isUserLoggedIn(){
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type","application/x-www-form-urlencoded");
+    let options = {
+      method: 'GET',
+      headers: myHeaders,
+    credentials:'include'
+
+    }
+    return fetch("http://localhost:9000/isLoggedIn", options)
     .then(response => response.json())
     .then(result => result)
     .catch(error => console.log('error', error));
@@ -52,6 +69,8 @@ async function addModifyNoteDB(email,newNote,action){
     let options = {
       method: 'DELETE',
       headers: myHeaders,
+      credentials:'include'
+
     }
     return fetch(`http://localhost:9000/user?email=${email}&key=${key}`, options)
     .then(response => response.json())
@@ -107,6 +126,19 @@ function App(){
         loggedIn:false,
         email:""
     });
+    useEffect(()=>{
+        const checkLog = async()=>{
+            const status = await isUserLoggedIn();
+            console.log(status);
+            if (status.user!==undefined){
+                setUser({
+                    loggedIn:true,
+                    email:status.user.email
+                });
+            }
+        }
+        checkLog();
+    },[]);
     useEffect(()=>{
         if(user.loggedIn===true){
             const get = async()=>{
