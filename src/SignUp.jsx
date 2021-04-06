@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 
 async function signUpUser(credentials){
-    const {firstName,lastName,username,password} = credentials;
+    const {firstName,lastName,email,password} = credentials;
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     var urlencoded = new URLSearchParams();
     urlencoded.append("firstName", firstName);
     urlencoded.append("lastName", lastName);
-    urlencoded.append("username", username);
+    urlencoded.append("email", email);
     urlencoded.append("password", password);
 
     var requestOptions = {
@@ -17,18 +17,18 @@ async function signUpUser(credentials){
         body: urlencoded,
     };
     return fetch("http://localhost:9000/register", requestOptions)
-    .then(response => response.text())
+    .then(response => response.status)
     .then(result => result)
     .catch(error => console.log('error', error));
     
 }
 
 
-function SignUp({setToken}){
+function SignUp({setUser}){
     const [formData,setFormData] = useState({
         firstName:"",
         lastName:"",
-        username:"",
+        email:"",
         password:""
     });
     function changeFormData(event){
@@ -46,10 +46,10 @@ function SignUp({setToken}){
                     lastName:newValue
                 });
             }
-            if(name==="username"){
+            if(name==="email"){
                 return ({
                     ...prevValue,
-                    username:newValue
+                    email:newValue
                 });
             }
             if(name==="password"){
@@ -64,8 +64,11 @@ function SignUp({setToken}){
         event.preventDefault();
         const status = await signUpUser(formData);
         console.log(status);
-        if(status==="OK"){
-            setToken(true);
+        if(status===200){
+            setUser({
+                loggedIn:true,
+                email:formData.email
+            });
         }
         
     }
@@ -75,7 +78,7 @@ function SignUp({setToken}){
                 <h1>Sign Up</h1>
                 <input  name="firstName" onChange={changeFormData}  type="text" placeholder="First Name" value={formData.firstName}/>
                 <input  name="lastName" onChange={changeFormData}  type="text" placeholder="Last Name" value={formData.lastName}/>
-                <input  name="username" onChange={changeFormData}  type="text" placeholder="Email" value={formData.username}/>
+                <input  name="email" onChange={changeFormData}  type="text" placeholder="Email" value={formData.email}/>
                 <input  name="password" onChange={changeFormData} type="password"placeholder="Password" value={formData.password}/>
                 <button  onClick={handleFormSubmit}>SignUp</button>
             </div>
