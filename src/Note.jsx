@@ -11,7 +11,7 @@ function Note(props){
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[])
 	function handleDocumentClick(event){
-		if(event.target.className!=="deleteNote"&&noteRef.current.contains(event.target)){
+		if(event.target.className!=="deleteNote"&&noteRef?.current?.contains(event.target)){
 			handleNoteClick(id,false);
 		}
 	}
