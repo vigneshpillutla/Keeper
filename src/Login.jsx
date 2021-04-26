@@ -1,43 +1,35 @@
 import React,{useState} from "react";
 import logo from "./logo/Login.png";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 async function loginUser(credentials) {
-    const {email,password} = credentials;
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("email", email);
-    urlencoded.append("password", password);
-
-    var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: urlencoded,
-    credentials:'include'
-    };
-
-    return fetch("http://localhost:9000/login", requestOptions)
-    .then(response => response.status)
-    .then(result => result)
+    return fetch("http://localhost:9000/login", {
+        method:'POST',
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({...credentials}),
+        credentials:'include'
+    })
+    .then(response => response.json())
     .catch(error => console.log('error', error));
 }
-function Login({setUser}){
+function Login(props){
+    const {user,setUser} = props;
     const [formData,setFormData] = useState({
         email:"",
         password:""
     });
+    if(user.loggedIn){
+        return <Redirect to='/' />
+
+    }
     const handleFormSubmit = async (event)=>{
         event.preventDefault();
-        const status = await loginUser(formData);
-        console.log(status);
-        if(status===200){         
-            setUser({
-                loggedIn:true,
-                email:formData.email
-            });
+        const response = await loginUser(formData);
+        if(response.loggedIn){
+            setUser({...response.user,loggedIn:true});
         }
-        
+        return <Redirect to='/' />
     }
     function changeFormData(event){
         const {value:newValue,name} = event.target;
@@ -64,7 +56,7 @@ function Login({setUser}){
                 <input  name="email" onChange={changeFormData}  type="text" placeholder="Email" value={formData.email}/>
                 <input  name="password" onChange={changeFormData} type="password"placeholder="Password" value={formData.password}/>
                 <button  onClick={handleFormSubmit}>Login</button>
-                <Link to="/register">
+                <Link to="/signup">
                     <p>Don't have an account? Sign up</p>
                 </Link>
             </div>
