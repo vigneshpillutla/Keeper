@@ -1,30 +1,25 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router";
 
 
 async function signUpUser(credentials){
-    const {firstName,lastName,email,password} = credentials;
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("firstName", firstName);
-    urlencoded.append("lastName", lastName);
-    urlencoded.append("email", email);
-    urlencoded.append("password", password);
-
     var requestOptions = {
         method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(credentials),
+        credentials:'include'
     };
     return fetch("http://localhost:9000/register", requestOptions)
-    .then(response => response.status)
-    .then(result => result)
+    .then(response => response.json())
     .catch(error => console.log('error', error));
     
 }
 
 
-function SignUp({setUser}){
+function SignUp(props){
+    const {setUser} = props;
     const [formData,setFormData] = useState({
         firstName:"",
         lastName:"",
@@ -60,16 +55,14 @@ function SignUp({setUser}){
             }
         });
     }
-    async function handleFormSubmit(event){
+    const handleFormSubmit = async (event)=>{
         event.preventDefault();
-        const status = await signUpUser(formData);
-        console.log(status);
-        if(status===200){
-            setUser({
-                loggedIn:true,
-                email:formData.email
-            });
+        const response = await signUpUser(formData);
+        // console.log(status);
+        if(response.loggedIn){
+            setUser({...response.user,loggedIn:true});
         }
+        props.history.push('/');
         
     }
     return (
