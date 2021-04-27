@@ -9,7 +9,7 @@ function NewNote(props){
 	function handleDocumentClick(event){
 		let clickedComponent = event.target
 		let targetDiv=newNoteRef.current
-		const noteClass = targetDiv.contains(clickedComponent) ? "": "hidden-content";
+		const noteClass = targetDiv?.contains(clickedComponent) ? "": "hidden-content";
 
 		setNewNoteClass(noteClass);
 	}

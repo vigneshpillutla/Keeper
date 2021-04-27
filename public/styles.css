@@ -52,16 +52,7 @@ html{
 body{
 	background-color: #eee;
 }
-header{
-	background-color: #f5ba13;
-	padding: 1% 2.5%;
-}
-header h1{
-	color: #fff;
-	font-family: 'Raleway', sans-serif;
-	font-weight: lighter;
-	font-size:xxx-large;
-}
+
 .note h1 {
 	pointer-events: none;
   font-size: 1.1em;

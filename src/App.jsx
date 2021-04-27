@@ -1,4 +1,4 @@
-import React,{useState,useReducer,useEffect} from "react";
+import React,{useState,useEffect} from "react";
 
 import Header from "./Header";
 import Note from "./Note";
@@ -7,182 +7,99 @@ import EditableNote from "./EditableNote";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import {BrowserRouter as Router,Redirect,Route} from "react-router-dom";
-let current;
-const ACTIONS = {
-    getNotes:'getNotes',
-    addNote:'addNote',
-    deleteNote:'deleteNote',
-    saveNote:'saveNote',
-    updateState:'updateState',
-}
-async function addModifyNoteDB(email,newNote,action){
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type","application/x-www-form-urlencoded");
-    let urlencoded = new URLSearchParams();
-    urlencoded.append("email",email);
-    urlencoded.append("newNote[key]",newNote.key);
-    urlencoded.append("newNote[title]",newNote.title);
-    urlencoded.append("newNote[content]",newNote.content);
-    let options = {
-      method: action,
-      headers: myHeaders,
-      body: urlencoded,
-      credentials:'include'
-    }
-    return fetch("http://localhost:9000/user", options)
-    .then(response => response.json())
-    .then(result => result)
-    .catch(error => console.log('error', error));
-    
-  }
-  async function getNoteDB(email){
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type","application/x-www-form-urlencoded");
-    let options = {
-      method: 'GET',
-      headers: myHeaders,
-    credentials:'include'
 
-    }
-    return fetch("http://localhost:9000/user?email="+email, options)
-    .then(response => response.json())
-    .then(result => result)
-    .catch(error => console.log('error', error));
-  }
-  async function isUserLoggedIn(){
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type","application/x-www-form-urlencoded");
-    let options = {
-      method: 'GET',
-      headers: myHeaders,
-    credentials:'include'
-
-    }
-    return fetch("http://localhost:9000/isLoggedIn", options)
-    .then(response => response.json())
-    .then(result => result)
-    .catch(error => console.log('error', error));
-  }
-  async function deleteNoteDB(email,key){
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type","application/x-www-form-urlencoded");
-    let options = {
-      method: 'DELETE',
-      headers: myHeaders,
-      credentials:'include'
-
-    }
-    return fetch(`http://localhost:9000/user?email=${email}&key=${key}`, options)
-    .then(response => response.json())
-    .then(result => result)
-    .catch(error => console.log('error', error));
-  }
-function reducer(notes,data){
-    let updatedNotes=[...notes];
-    const action =data.action;
-    const email = data.email;
-    if(action===ACTIONS.getNotes){
-        return data.userNotes;
-    }
-    else if(action===ACTIONS.deleteNote){
-        deleteNoteDB(email,data.key);
-        return updatedNotes.filter(elem=>elem.key!==data.key);
-    }
-    else{
-        const{key,title,content} = data	;
-        if(action===ACTIONS.addNote){
-                const newNote = {
-                    key:key,
-                    title:title,
-                    content:content
-                }
-                updatedNotes.push(newNote);
-                addModifyNoteDB(email,newNote,'PUT');
-        }
-        else if(action===ACTIONS.saveNote){
-            let pos = updatedNotes.map(elem=>{return elem.key}).indexOf(key)
-            const newNote = {
-                key:key,
-                title:title,
-                content:content
-            }
-            updatedNotes[pos]=newNote
-            addModifyNoteDB(email,newNote,'PATCH');
-
-
-        }
-    }
-    return updatedNotes;
-}
+let currentNotes = []
 function App(){
-    const [notes,setNotes] = useReducer(reducer,[]);
+    const [notes,setNotes] = useState([]);
+    const [user,setUser] = useState({
+        firstName:"",
+        lastName:"",
+        email:"",
+        notes:[],
+        loggedIn:false
+    })
     const [editableNoteInfo,setEditableNoteInfo] = useState({
         hideEditableNote:true,
         title:"",
         content:"",
         id:"",
     });
-    const [user,setUser] = useState({
-        loggedIn:false,
-        email:""
-    });
     useEffect(()=>{
-        const checkLog = async()=>{
-            const status = await isUserLoggedIn();
-            console.log(status);
-            if (status.user!==undefined){
-                setUser({
-                    loggedIn:true,
-                    email:status.user.email
-                });
+        fetch('http://localhost:9000/loginStatus',{
+            credentials:'include',
+            method:'GET'
+        })
+        .then(res=>res.json())
+        .then(response=>{
+            if(response.loggedIn){
+                setUser({...response.user,loggedIn:true});
             }
-        }
-        checkLog();
-    },[]);
+        })
+    },[])
     useEffect(()=>{
-        if(user.loggedIn===true){
-            const get = async()=>{
-                const storedNotes = await getNoteDB(user.email)
-                setNotes({
-                    action:ACTIONS.getNotes,
-                    userNotes:storedNotes
-                })
-            }
-            get();
-        }
-    },[user]);
-    useEffect(()=>{
-        current=notes
-        console.log(current);
+        currentNotes = [...notes];
     },[notes]);
+    useEffect(()=>{
+        if(user.loggedIn){
+            setNotes(user.notes);
+        }
+    },[user])
     function addNotes(noteData){
         const {noteTitle:title,noteContent:content} = noteData;
         if(title!==""||content!==""){
-            const key = Date.now();
-            console.log(key);
-            setNotes({
-                email:user.email,
-                action:ACTIONS.addNote,
-                key:key,
+            const updatedNotes = [...notes];
+            const newNote = {
+                key:Date.now(),
                 title:title,
                 content:content
+            };
+            updatedNotes.push(newNote);
+            setNotes(updatedNotes);
+            fetch('http://localhost:9000/user',{
+                method:'PUT',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    email:"vigneshpillutla@gmail.com",
+                    newNote
+                }),
+                credentials:'include'
             })
+            .then(res=>res.json())
+            .then(data=>console.log(data))
+            .catch(err=>console.log("Oops! something went wrong"));
         }
     }
     function saveNote(noteData){
-        let test={
-            ...noteData,
-            action:ACTIONS.saveNote,
-            email:user.email
-        }
-        setNotes(test)
+        const updatedNotes = [...notes];
+        let pos =  (notes.map(elem=>elem.key)).indexOf(noteData.key)
+        updatedNotes[pos] = noteData
+        setNotes(updatedNotes)
+        fetch('http://localhost:9000/user',{
+            method:'PATCH',
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                email:"vigneshpillutla@gmail.com",
+                noteData
+            }),
+            credentials:'include'
+        })
+        .then(response=>response.json())
+        .then(data=>console.log(data));
     }
     function deleteNote(key){
-        setNotes({
-            action:ACTIONS.deleteNote,
-            key:key,
-            email:user.email
-        });
+        const email = "vigneshpillutla@gmail.com"
+        const updatedNotes = notes.filter(elem=>elem.key!==key)
+        setNotes(updatedNotes)
+        fetch(`http://localhost:9000/user/${email}/${key}`,{
+            method:'DELETE',
+            credentials:'include'
+        })
+        .then(response=>response.json())
+        .then(data=>console.log(data));
     }
     function handleNoteClick(key,hide){
         if(hide){
@@ -194,8 +111,7 @@ function App(){
             })
         }
         else{
-            console.log(current);
-            let {title,content} = current.filter(item => item.key===key)[0]
+            let {title,content} = currentNotes.filter(item => item.key===key)[0]
             
             setEditableNoteInfo({
                 hideEditableNote:hide,
@@ -206,38 +122,39 @@ function App(){
         }
         
     }
-    if(!user.loggedIn){
-        return( 
-            <Router>
-            <div>
-                <Header/>    
-                <Route path="/" exact><Redirect to="/login"/></Route>
-                <Route path="/login" exact render={(props)=><Login {...props} setUser={setUser}/>}/>
-                <Route path="/register" render={(props)=><SignUp {...props} setUser={setUser}/>}/>
-            </div>
-            </Router>
-        );
-    }
-    else{
-        
+    const Home = ()=>{
         return (
             <div>
-            <Header/>
-            <NewNote  onClick={addNotes}/>
-            {notes.map(newNote => 
-                <Note 
-                id = {newNote.key}
-                key={newNote.key}
-                title={newNote.title}
-                content={newNote.content}
-                onClick={deleteNote}
-                onNoteClick={handleNoteClick}
-                />
-            )}
-            <EditableNote allInfo={editableNoteInfo} onBackgroundClick={handleNoteClick} onSave={saveNote}/>
+                <Header user={user} setUser={setUser}/>
+                <NewNote  onClick={addNotes}/>
+                {notes.map(newNote => 
+                    <Note 
+                        id = {newNote.key}
+                        key={newNote.key}
+                        title={newNote.title}
+                        content={newNote.content}
+                        onClick={deleteNote}
+                        onNoteClick={handleNoteClick}
+                    />
+                )}
+                <EditableNote allInfo={editableNoteInfo} onBackgroundClick={handleNoteClick} onSave={saveNote}/>
             </div>
-        );
+        )
     }
+    return (
+       <Router>
+                <Route path='/' exact render=
+                    {
+                        (props)=>user.loggedIn ? <Home/> : <Redirect to='/login'/>
+                    }
+                />
+               <Route path='/login' exact render={
+                   (props)=><Login {...props}  user={user} setUser={setUser}/>
+                }
+               />
+               <Route path='/signup' exact render={(props)=><SignUp {...props} setUser={setUser}/>}/>
+       </Router>
+    );
 }
 
 export default App;
