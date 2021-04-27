@@ -1,0 +1,36 @@
+header{
+	background-color: #f5ba13;
+	padding: 1% 2.5%;
+    display: flex;
+    color: #fff;
+	font-family: 'Raleway', sans-serif;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1{
+    margin-left: 3%;
+    font-weight: lighter;
+	font-size:xxx-large;
+}
+.appName, .userUtilities{
+    display: flex;
+}
+.logout{
+    padding: 5px 10px;
+    margin-left: 20px;
+    border-radius: 10px;
+    border: none;
+}
+.logout:hover{
+    transform:scale(1.05);
+    transition-duration: 0.3s;
+}
+.logout:active{
+    transform:scale(0.9);
+    transition-duration: 0.3s;
+}
+
+header img{
+    width:50px;
+    height: 50px;
+}
