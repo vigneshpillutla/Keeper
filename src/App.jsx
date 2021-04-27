@@ -1,4 +1,4 @@
-import React,{useState,useReducer,useEffect} from "react";
+import React,{useState,useEffect} from "react";
 
 import Header from "./Header";
 import Note from "./Note";
@@ -6,7 +6,7 @@ import NewNote from "./NewNote";
 import EditableNote from "./EditableNote";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import {BrowserRouter as Router,Redirect,Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router,Redirect,Route} from "react-router-dom";
 
 let currentNotes = []
 function App(){
@@ -15,6 +15,7 @@ function App(){
         firstName:"",
         lastName:"",
         email:"",
+        notes:[],
         loggedIn:false
     })
     const [editableNoteInfo,setEditableNoteInfo] = useState({
@@ -24,14 +25,17 @@ function App(){
         id:"",
     });
     useEffect(()=>{
-        fetch('http://localhost:9000/loginStatus',{credentials:'include'})
+        fetch('http://localhost:9000/loginStatus',{
+            credentials:'include',
+            method:'GET'
+        })
         .then(res=>res.json())
         .then(response=>{
             if(response.loggedIn){
                 setUser({...response.user,loggedIn:true});
             }
         })
-    },[]);
+    },[])
     useEffect(()=>{
         currentNotes = [...notes];
     },[notes]);
@@ -59,7 +63,8 @@ function App(){
                 body:JSON.stringify({
                     email:"vigneshpillutla@gmail.com",
                     newNote
-                })
+                }),
+                credentials:'include'
             })
             .then(res=>res.json())
             .then(data=>console.log(data))
@@ -79,7 +84,8 @@ function App(){
             body:JSON.stringify({
                 email:"vigneshpillutla@gmail.com",
                 noteData
-            })
+            }),
+            credentials:'include'
         })
         .then(response=>response.json())
         .then(data=>console.log(data));
@@ -90,6 +96,7 @@ function App(){
         setNotes(updatedNotes)
         fetch(`http://localhost:9000/user/${email}/${key}`,{
             method:'DELETE',
+            credentials:'include'
         })
         .then(response=>response.json())
         .then(data=>console.log(data));
@@ -104,7 +111,6 @@ function App(){
             })
         }
         else{
-            console.log(currentNotes);
             let {title,content} = currentNotes.filter(item => item.key===key)[0]
             
             setEditableNoteInfo({
@@ -119,7 +125,7 @@ function App(){
     const Home = ()=>{
         return (
             <div>
-                <Header/>
+                <Header user={user} setUser={setUser}/>
                 <NewNote  onClick={addNotes}/>
                 {notes.map(newNote => 
                     <Note 
@@ -137,14 +143,15 @@ function App(){
     }
     return (
        <Router>
-                <Route path='/' exact>
+                <Route path='/' exact render=
                     {
-                        user.loggedIn ? <Home/> : <Redirect to='/login'/>
+                        (props)=>user.loggedIn ? <Home/> : <Redirect to='/login'/>
                     }
-               </Route>
-               <Route path='/login' exact >
-               <Login  user={user} setUser={setUser}/>
-               </Route>
+                />
+               <Route path='/login' exact render={
+                   (props)=><Login {...props}  user={user} setUser={setUser}/>
+                }
+               />
                <Route path='/signup' exact render={(props)=><SignUp {...props} setUser={setUser}/>}/>
        </Router>
     );

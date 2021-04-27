@@ -20,7 +20,7 @@ function Login(props){
         password:""
     });
     if(user.loggedIn){
-        return <Redirect to='/' />
+        props.history.replace('/')
 
     }
     const handleFormSubmit = async (event)=>{
@@ -29,7 +29,6 @@ function Login(props){
         if(response.loggedIn){
             setUser({...response.user,loggedIn:true});
         }
-        return <Redirect to='/' />
     }
     function changeFormData(event){
         const {value:newValue,name} = event.target;

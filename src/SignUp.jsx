@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 
 
 async function signUpUser(credentials){
@@ -58,11 +58,11 @@ function SignUp(props){
     const handleFormSubmit = async (event)=>{
         event.preventDefault();
         const response = await signUpUser(formData);
-        // console.log(status);
         if(response.loggedIn){
             setUser({...response.user,loggedIn:true});
         }
-        props.history.push('/');
+        // console.log("signed!!");
+        props.history.replace('/')
         
     }
     return (
