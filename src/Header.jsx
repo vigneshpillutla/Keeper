@@ -6,7 +6,7 @@ function Header(props){
 	const {user,setUser} = props
 	const {firstName} = user
 	const logout = ()=>{
-		fetch("http://localhost:9000/logout",{credentials:'include'})
+		fetch("https://keep-er-api.herokuapp.com/logout",{credentials:'include'})
 		.then(res=>res.json())
 		.then(response=>{
 			console.log("User logged out !");

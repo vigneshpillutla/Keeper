@@ -12,7 +12,7 @@ async function signUpUser(credentials){
         body: JSON.stringify(credentials),
         credentials:'include'
     };
-    return fetch("http://localhost:9000/register", requestOptions)
+    return fetch("https://keep-er-api.herokuapp.com/register", requestOptions)
     .then(response => response.json())
     .catch(error => console.log('error', error));
     
