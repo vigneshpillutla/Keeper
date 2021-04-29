@@ -19,6 +19,7 @@ async function signUpUser(credentials){
 
 
 function SignUp(props){
+    const [invalidSignup,setInvalidSignup] = useState("hidden-content")
     const {setUser} = props;
     const [formData,setFormData] = useState({
         firstName:"",
@@ -61,8 +62,9 @@ function SignUp(props){
         if(response.loggedIn){
             setUser({...response.user,loggedIn:true});
         }
-        // console.log("signed!!");
-        props.history.replace('/')
+        else{
+            setInvalidSignup("");
+        }
         
     }
     return (
@@ -73,6 +75,7 @@ function SignUp(props){
                 <input  name="lastName" onChange={changeFormData}  type="text" placeholder="Last Name" value={formData.lastName}/>
                 <input  name="email" onChange={changeFormData}  type="text" placeholder="Email" value={formData.email}/>
                 <input  name="password" onChange={changeFormData} type="password"placeholder="Password" value={formData.password}/>
+                <p className={`login-alert ${invalidSignup}`}>*User already exists</p>
                 <button  onClick={handleFormSubmit}>SignUp</button>
             </div>
         </div>

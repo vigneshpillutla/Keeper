@@ -46,7 +46,7 @@ function NewNote(props){
 		    <div ref={newNoteRef}>
 				<input className="noteTitle" onChange={updateFormState} autoComplete="off"  name="title" type="search" placeholder="Title" value={formState.noteTitle}></input>
 				<div className={newNoteClass}>
-					<textarea className="newNoteTextArea txtArea" onChange={updateFormState} name="content" id="" cols="40" rows="2" placeholder="Write a note..." value={formState.noteContent}></textarea>
+					<textarea className="newNoteTextArea txtArea" onChange={updateFormState} name="content" id="" cols="40" rows="4" placeholder="Write a note..." value={formState.noteContent}></textarea>
 					<button className="addIcon" type="submit">+</button>
 				</div>
 			</div>

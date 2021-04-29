@@ -14,6 +14,7 @@ header h1{
 }
 .appName, .userUtilities{
     display: flex;
+    justify-content: center;
 }
 .logout{
     padding: 5px 10px;

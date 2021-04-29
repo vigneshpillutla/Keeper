@@ -61,7 +61,7 @@ function App(){
                     "Content-Type":"application/json"
                 },
                 body:JSON.stringify({
-                    email:"vigneshpillutla@gmail.com",
+                    email:user.email,
                     newNote
                 }),
                 credentials:'include'
@@ -82,7 +82,7 @@ function App(){
                 "Content-Type":"application/json"
             },
             body:JSON.stringify({
-                email:"vigneshpillutla@gmail.com",
+                email:user.email,
                 noteData
             }),
             credentials:'include'
@@ -91,7 +91,7 @@ function App(){
         .then(data=>console.log(data));
     }
     function deleteNote(key){
-        const email = "vigneshpillutla@gmail.com"
+        const email = user.email
         const updatedNotes = notes.filter(elem=>elem.key!==key)
         setNotes(updatedNotes)
         fetch(`http://localhost:9000/user/${email}/${key}`,{
@@ -143,11 +143,11 @@ function App(){
     }
     return (
        <Router>
-                <Route path='/' exact render=
+                <Route path='/' exact >
                     {
-                        (props)=>user.loggedIn ? <Home/> : <Redirect to='/login'/>
+                        user.loggedIn ? <Home/> : <Redirect to='/login'/>
                     }
-                />
+                </Route>
                <Route path='/login' exact render={
                    (props)=><Login {...props}  user={user} setUser={setUser}/>
                 }

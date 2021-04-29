@@ -14,6 +14,7 @@ async function loginUser(credentials) {
     .catch(error => console.log('error', error));
 }
 function Login(props){
+    const [invalidLogin,setInvalidLogin] = useState("hidden-content")
     const {user,setUser} = props;
     const [formData,setFormData] = useState({
         email:"",
@@ -28,6 +29,9 @@ function Login(props){
         const response = await loginUser(formData);
         if(response.loggedIn){
             setUser({...response.user,loggedIn:true});
+        }
+        else{
+            setInvalidLogin("");
         }
     }
     function changeFormData(event){
@@ -55,6 +59,7 @@ function Login(props){
                 <input  name="email" onChange={changeFormData}  type="text" placeholder="Email" value={formData.email}/>
                 <input  name="password" onChange={changeFormData} type="password"placeholder="Password" value={formData.password}/>
                 <button  onClick={handleFormSubmit}>Login</button>
+                <p className={`login-alert ${invalidLogin}`}>*Invalid username or password</p>
                 <Link to="/signup">
                     <p>Don't have an account? Sign up</p>
                 </Link>

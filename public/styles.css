@@ -51,6 +51,8 @@ html{
 }
 body{
 	background-color: #eee;
+	background-image: url("https://www.transparenttextures.com/patterns/gplay.png");
+
 }
 
 .note h1 {
@@ -257,5 +259,9 @@ form .addIcon{
 .login-form p{
 	font-size: 0.8em;
 	margin:8%;
+}
+.login-alert{
+	font-style: italic;
+	color: red;
 }
 
