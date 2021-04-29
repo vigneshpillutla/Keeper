@@ -25,9 +25,10 @@ function App(){
         id:"",
     });
     useEffect(()=>{
-        fetch('http://localhost:9000/loginStatus',{
+        fetch('https://keep-er-api.herokuapp.com/loginStatus',{
             credentials:'include',
-            method:'GET'
+            method:'GET',
+            mode:'cors'
         })
         .then(res=>res.json())
         .then(response=>{
@@ -55,7 +56,7 @@ function App(){
             };
             updatedNotes.push(newNote);
             setNotes(updatedNotes);
-            fetch('http://localhost:9000/user',{
+            fetch('https://keep-er-api.herokuapp.com/user',{
                 method:'PUT',
                 headers:{
                     "Content-Type":"application/json"
@@ -64,7 +65,8 @@ function App(){
                     email:user.email,
                     newNote
                 }),
-                credentials:'include'
+                credentials:'include',
+                mode:'cors'
             })
             .then(res=>res.json())
             .then(data=>console.log(data))
@@ -76,7 +78,7 @@ function App(){
         let pos =  (notes.map(elem=>elem.key)).indexOf(noteData.key)
         updatedNotes[pos] = noteData
         setNotes(updatedNotes)
-        fetch('http://localhost:9000/user',{
+        fetch('https://keep-er-api.herokuapp.com/user',{
             method:'PATCH',
             headers:{
                 "Content-Type":"application/json"
@@ -85,7 +87,8 @@ function App(){
                 email:user.email,
                 noteData
             }),
-            credentials:'include'
+            credentials:'include',
+            mode:'cors'
         })
         .then(response=>response.json())
         .then(data=>console.log(data));
@@ -94,9 +97,10 @@ function App(){
         const email = user.email
         const updatedNotes = notes.filter(elem=>elem.key!==key)
         setNotes(updatedNotes)
-        fetch(`http://localhost:9000/user/${email}/${key}`,{
+        fetch(`https://keep-er-api.herokuapp.com/user/${email}/${key}`,{
             method:'DELETE',
-            credentials:'include'
+            credentials:'include',
+            mode:'cors'
         })
         .then(response=>response.json())
         .then(data=>console.log(data));
