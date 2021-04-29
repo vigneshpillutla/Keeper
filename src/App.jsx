@@ -25,7 +25,7 @@ function App(){
         id:"",
     });
     useEffect(()=>{
-        fetch('https://keep-er-api.herokuapp.com/loginStatus',{
+        fetch('http://localhost:9000/loginStatus',{
             credentials:'include',
             method:'GET'
         })
@@ -55,7 +55,7 @@ function App(){
             };
             updatedNotes.push(newNote);
             setNotes(updatedNotes);
-            fetch('https://keep-er-api.herokuapp.com/user',{
+            fetch('http://localhost:9000/user',{
                 method:'PUT',
                 headers:{
                     "Content-Type":"application/json"
@@ -76,7 +76,7 @@ function App(){
         let pos =  (notes.map(elem=>elem.key)).indexOf(noteData.key)
         updatedNotes[pos] = noteData
         setNotes(updatedNotes)
-        fetch('https://keep-er-api.herokuapp.com/user',{
+        fetch('http://localhost:9000/user',{
             method:'PATCH',
             headers:{
                 "Content-Type":"application/json"
@@ -94,7 +94,7 @@ function App(){
         const email = user.email
         const updatedNotes = notes.filter(elem=>elem.key!==key)
         setNotes(updatedNotes)
-        fetch(`https://keep-er-api.herokuapp.com/user/${email}/${key}`,{
+        fetch(`http://localhost:9000/user/${email}/${key}`,{
             method:'DELETE',
             credentials:'include'
         })
