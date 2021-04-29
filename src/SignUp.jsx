@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 
 async function signUpUser(credentials){
@@ -65,19 +66,22 @@ function SignUp(props){
         else{
             setInvalidSignup("");
         }
-        
+        props.history.replace('/')
     }
     return (
         <div className="login-page">
-            <div className="login-form">
+            <form className="login-form" onSubmit={handleFormSubmit}>
                 <h1>Sign Up</h1>
-                <input  name="firstName" onChange={changeFormData}  type="text" placeholder="First Name" value={formData.firstName}/>
-                <input  name="lastName" onChange={changeFormData}  type="text" placeholder="Last Name" value={formData.lastName}/>
-                <input  name="email" onChange={changeFormData}  type="text" placeholder="Email" value={formData.email}/>
-                <input  name="password" onChange={changeFormData} type="password"placeholder="Password" value={formData.password}/>
+                <input  name="firstName" onChange={changeFormData}  type="text" placeholder="First Name" value={formData.firstName} required/>
+                <input  name="lastName" onChange={changeFormData}  type="text" placeholder="Last Name" value={formData.lastName} required/>
+                <input  name="email" onChange={changeFormData}  type="email" placeholder="Email" value={formData.email} required/>
+                <input  name="password" onChange={changeFormData} type="password"placeholder="Password" minlength="3" value={formData.password} required/>
                 <p className={`login-alert ${invalidSignup}`}>*User already exists</p>
-                <button  onClick={handleFormSubmit}>SignUp</button>
-            </div>
+                <button  type='submit'>SignUp</button>
+                <Link to="/login">
+                    <p>Already have an account? Login</p>
+                </Link>
+            </form>
         </div>
     )
 }

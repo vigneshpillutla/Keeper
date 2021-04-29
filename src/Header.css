@@ -7,6 +7,11 @@ header{
     justify-content: space-between;
     align-items: center;
 }
+@media only screen and (max-width: 500px) {
+    .userUtilities h3 {
+      display: none;
+    }
+  }
 header h1{
     margin-left: 3%;
     font-weight: lighter;
