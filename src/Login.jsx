@@ -8,7 +8,8 @@ async function loginUser(credentials) {
             "Content-Type":"application/json"
         },
         body:JSON.stringify({...credentials}),
-        credentials:'include'
+        credentials:'include',
+        mode:'cors'
     })
     .then(response => response.json())
     .catch(error => console.log('error', error));

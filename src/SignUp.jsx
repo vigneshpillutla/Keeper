@@ -10,7 +10,8 @@ async function signUpUser(credentials){
             "Content-Type":"application/json"
         },
         body: JSON.stringify(credentials),
-        credentials:'include'
+        credentials:'include',
+        mode:'cors'
     };
     return fetch("https://keep-er-api.herokuapp.com/register", requestOptions)
     .then(response => response.json())
