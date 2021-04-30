@@ -28,7 +28,6 @@ function App(){
         fetch('https://keep-er-api.herokuapp.com/loginStatus',{
             credentials:'include',
             method:'GET',
-            mode:'cors'
         })
         .then(res=>res.json())
         .then(response=>{
