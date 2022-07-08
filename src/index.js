@@ -1,7 +1,17 @@
+import { AuthProvider } from 'providers/AuthProvider.jsx';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import App from "./App.jsx";
+import App from './App.jsx';
 
-
-ReactDOM.render(<App />,document.getElementById('root'));
+ReactDOM.render(
+  <>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+    <ToastContainer />
+  </>,
+  document.getElementById('root')
+);

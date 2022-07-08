@@ -24,19 +24,19 @@ function App() {
     content: '',
     id: ''
   });
-  useEffect(() => {
-    fetch('https://keep-er-api.herokuapp.com/loginStatus', {
-      credentials: 'include',
-      method: 'GET',
-      mode: 'cors'
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.loggedIn) {
-          setUser({ ...response.user, loggedIn: true });
-        }
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://keep-er-api.herokuapp.com/loginStatus', {
+  //     credentials: 'include',
+  //     method: 'GET',
+  //     mode: 'cors'
+  //   })
+  //     .then((res) => res.json())
+  //     .then((response) => {
+  //       if (response.loggedIn) {
+  //         setUser({ ...response.user, loggedIn: true });
+  //       }
+  //     });
+  // }, []);
   useEffect(() => {
     currentNotes = [...notes];
   }, [notes]);
