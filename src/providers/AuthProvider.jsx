@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setUser(data.userData);
+        setUser(data.user);
         setIsLoggedIn(true);
         toast.success('Logged in successfully!');
       } else {
