@@ -5,7 +5,7 @@ import Note from './Note';
 import NewNote from './NewNote';
 import EditableNote from './EditableNote';
 import Login from 'components/Login';
-import SignUp from './SignUp';
+import SignUp from './components/SignUp';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 
 let currentNotes = [];

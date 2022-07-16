@@ -15,4 +15,16 @@ const login = async (credentials) => {
   });
 };
 
-export default { login };
+const signUp = async (credentials) => {
+  return fetch(`${auth}/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials),
+    credentials: 'include',
+    mode: 'cors'
+  });
+};
+
+export default { login, signUp };

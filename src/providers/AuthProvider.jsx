@@ -29,10 +29,29 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const signUp = async (credentials) => {
+    try {
+      const response = await UserAuth.signUp(credentials);
+
+      const data = await response.json();
+      const message = data.msg;
+      if (response.ok) {
+        setUser(data.user);
+        setIsLoggedIn(true);
+        toast.success(message);
+      } else {
+        toast.error(message);
+      }
+    } catch (e) {
+      toast.error('Unable to sign up! Try again later.');
+    }
+  };
+
   const value = {
     user,
     isLoggedIn,
-    login
+    login,
+    signUp
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
