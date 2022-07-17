@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Header from './Header';
+import Header from './components/Header';
 import Note from './Note';
 import NewNote from './NewNote';
 import EditableNote from './EditableNote';

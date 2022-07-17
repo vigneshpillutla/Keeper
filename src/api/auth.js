@@ -1,7 +1,12 @@
 import config from 'config/keys';
+import { callGet } from 'utils/requests';
 
 const { serverDomain } = config;
 const auth = `${serverDomain}/api/auth`;
+
+const getUser = () => {
+  return callGet(`${auth}/user`);
+};
 
 const login = async (credentials) => {
   return fetch(`${auth}/login`, {
@@ -27,4 +32,6 @@ const signUp = async (credentials) => {
   });
 };
 
-export default { login, signUp };
+const logout = async () => callGet(`${auth}/logout`);
+
+export default { login, signUp, logout, getUser };

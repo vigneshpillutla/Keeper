@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from 'providers/AuthProvider';
 import { Form, PeekPassword } from './Form';
+import { Navigate } from 'react-router-dom';
 
 function Login(props) {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ function Login(props) {
     password: ''
   });
   const auth = useAuth();
+  const { sessionData } = auth;
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -25,6 +27,10 @@ function Login(props) {
     }
 
     throw new Error(`Trying to change an invalid input field - ${name}`);
+  }
+
+  if (sessionData.isLoggedIn) {
+    return <Navigate to="/" replace />;
   }
 
   return (

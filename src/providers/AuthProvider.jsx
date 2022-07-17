@@ -9,7 +9,26 @@ const useAuth = () => {
 };
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [sessionData, setSessionData] = useState({
+    loading: true,
+    isLoggedIn: false
+  });
+
+  const modifySessionData = (data) => {
+    setSessionData((prev) => ({ ...prev, ...data }));
+  };
+
+  const getUser = async () => {
+    modifySessionData({ loading: true });
+    const response = await UserAuth.getUser();
+
+    if (response.ok) {
+      const res = await response.json();
+      setUser(res.user);
+      modifySessionData({ isLoggedIn: true });
+    }
+    modifySessionData({ loading: false });
+  };
 
   const login = async (credentials) => {
     try {
@@ -19,8 +38,8 @@ const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         setUser(data.user);
-        setIsLoggedIn(true);
-        toast.success('Logged in successfully!');
+        modifySessionData({ isLoggedIn: true });
+        toast.success('Welcome Back!!');
       } else {
         toast.error(data.msg);
       }
@@ -37,7 +56,8 @@ const AuthProvider = ({ children }) => {
       const message = data.msg;
       if (response.ok) {
         setUser(data.user);
-        setIsLoggedIn(true);
+        modifySessionData({ isLoggedIn: true });
+
         toast.success(message);
       } else {
         toast.error(message);
@@ -47,10 +67,24 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    const response = await UserAuth.logout();
+    if (response.ok) {
+      setUser(null);
+      modifySessionData({ loading: false, isLoggedIn: false });
+      toast.success('Sad to see you leave :(');
+      return;
+    }
+
+    toast.error('Unable to logout! Hang around a bit longer :)');
+  };
+
   const value = {
     user,
-    isLoggedIn,
+    sessionData,
+    getUser,
     login,
+    logout,
     signUp
   };
 
