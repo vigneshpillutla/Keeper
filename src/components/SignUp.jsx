@@ -1,5 +1,6 @@
 import { useAuth } from 'providers/AuthProvider';
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { Form, PeekPassword } from './Form';
 
 function SignUp(props) {
@@ -10,6 +11,9 @@ function SignUp(props) {
     password: ''
   });
   const auth = useAuth();
+  const {
+    sessionData: { isLoggedIn }
+  } = auth;
 
   function changeFormData(event) {
     const { value: newValue, name } = event.target;
@@ -27,6 +31,10 @@ function SignUp(props) {
     event.preventDefault();
     auth.signUp(formData);
   };
+
+  if (isLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <Form type="signup" onSubmit={handleFormSubmit}>

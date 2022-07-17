@@ -6,16 +6,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// import App from './App.jsx';
-import AppRefactor from 'components/AppRefactor.jsx';
+import App from './App.jsx';
 
 ReactDOM.render(
   <>
     <BrowserRouter>
       <AuthProvider>
         <NotesProvider>
-          {/* <App /> */}
-          <AppRefactor />
+          <App />
         </NotesProvider>
       </AuthProvider>
       <ToastContainer />

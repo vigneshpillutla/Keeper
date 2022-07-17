@@ -1,36 +1,40 @@
 ::-webkit-scrollbar {
-	width: 5px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-	background: #f1f1f1; 
-	opacity: 0.2;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-	background:#c7c7c7; 
-	border-radius:10px;
-	opacity: 0.5;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-	background: #555; 
-  }
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  opacity: 0.2;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+  opacity: 0.5;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 @keyframes editNoteAnimation {
-	from {opacity: 0;}
-	to {opacity: 1;}
-   }
-   @keyframes editNoteBackground {
-	0% {
-		background-color: white;
-	}
-	100% {
-		background-color: #202124;
-	}
-   }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes editNoteBackground {
+  0% {
+    background-color: white;
+  }
+  100% {
+    background-color: #202124;
+  }
+}
 * {
   padding: 0;
   margin: 0;
@@ -46,37 +50,36 @@ form textarea {
   font-family: inherit;
   resize: none;
 }
-html{
-	font-family: 'Poppins', sans-serif;
+html {
+  font-family: 'Poppins', sans-serif;
 }
-body{
-	background-color: #eee;
-	background-image: url("https://www.transparenttextures.com/patterns/gplay.png");
-
+body {
+  background-color: #eee;
+  background-image: url('https://www.transparenttextures.com/patterns/gplay.png');
 }
 
 .note h1 {
-	pointer-events: none;
+  pointer-events: none;
   font-size: 1.1em;
   margin-bottom: 6px;
 }
-form input{
-	font-weight: bold;
+form input {
+  font-weight: bold;
 }
-.note{
-	background-color: #fff;
-	border-radius: 7px;
-	width: 240px;
-	padding: 10px 22px;
-	margin: 16px;
-	float: left;
+.note {
+  background-color: #fff;
+  border-radius: 7px;
+  width: 240px;
+  padding: 10px 22px;
+  margin: 16px;
+  float: left;
 }
-.newNote{
-	width: 80%;
-	font-family: inherit;
+.newNote {
+  width: 80%;
+  font-family: inherit;
 }
-.note:hover{
-	box-shadow: 0 1px 5px rgb(138 137 137);
+.note:hover {
+  box-shadow: 0 1px 5px rgb(138 137 137);
 }
 .note p {
   font-size: 1.1em;
@@ -84,32 +87,36 @@ form input{
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-#delete-button,.save,.close{
-	font-size: 0.9em;
-	background: none;
-	border:none;
-	width: 50px;
-	height: 40px;
-	color: #f5ba13;
-	margin:5px -13px 3px 0px;
-	outline:none;
+#delete-button,
+.save,
+.close {
+  font-size: 0.9em;
+  background: none;
+  border: none;
+  width: 50px;
+  height: 40px;
+  color: #f5ba13;
+  margin: 5px -13px 3px 0px;
+  outline: none;
 }
-#delete-button:hover,.save:hover,.close:hover {
-	/* box-shadow:0; */
-	transition-duration: 0.2s;
-	transform:scale(1.2); 
+#delete-button:hover,
+.save:hover,
+.close:hover {
+  /* box-shadow:0; */
+  transition-duration: 0.2s;
+  transform: scale(1.2);
 }
-.note h5{
-	/* pointer-events: none; */
-	margin-bottom: -10px;
-	margin-right:10px; 
+.note h5 {
+  /* pointer-events: none; */
+  margin-bottom: -10px;
+  margin-right: 10px;
 }
-.deleteNote{
-	float: right;
+.deleteNote {
+  float: right;
 }
-h5 :hover{
-	transition-duration: 0.2s;
-	transform:scale(1.1);
+h5 :hover {
+  transition-duration: 0.2s;
+  transform: scale(1.1);
 }
 footer {
   position: absolute;
@@ -118,32 +125,34 @@ footer {
   width: 100%;
   height: 2.5rem;
 }
-footer p{
-	color: #ccc;
+footer p {
+  color: #ccc;
 }
-.addIcon{
-	color:white;
-	background-color: #f5ba13;
-	border-radius: 50%;
-	border:none;
+.addIcon {
+  color: white;
+  background-color: #f5ba13;
+  border-radius: 50%;
+  border: none;
 }
-form .addIcon{
-	position: absolute;
-	border-radius: 50%;
-	width: 36px;
-	height: 36px;
-	color:white;
-	background-color: #f5ba13;
-	border:none;
-	font-size: 150%;
-	right:38px;
-	bottom:-18px;
-	box-shadow: 0 1px 5px rgb(138, 137, 137);
-	outline: none;
+form .addIcon {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  color: white;
+  background-color: #f5ba13;
+  border: none;
+  font-size: 150%;
+  right: 38px;
+  bottom: -18px;
+  box-shadow: 0 1px 5px rgb(138, 137, 137);
+  outline: none;
 }
-.new-note-form, .editableForm{
+.new-note-form,
+.editableForm {
   position: relative;
-  min-width:270px;
+  min-width: 270px;
   width: 40%;
   margin: 30px auto 20px auto;
   background: #fff;
@@ -151,60 +160,58 @@ form .addIcon{
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
-.hidden-content{
-	display: none;
+.hidden-content {
+  display: none;
 }
-.editable-card-background{
-	position: fixed;
-	background-color: black;
-	opacity: 0.7;
-	height: 100%;
-	width:100%;
-	top: 0;
-	left: 0;
-	animation-name: editNoteBackground;
-	/* animation-duration: 0.1s; */
+.editable-card-background {
+  position: fixed;
+  background-color: black;
+  opacity: 0.7;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  animation-name: editNoteBackground;
+  /* animation-duration: 0.1s; */
 }
-.editableForm{
-	position:fixed;
-	text-align: center;
-	top: 18%;
-	left: 30%;
-	background-color: white;
-	border-radius: 10px;
-	height: 40%;
-	width: 40%;
-	min-height: 200px;
-	animation-name: editNoteAnimation;
-	animation-duration: 0.3s;
+.editableForm {
+  position: fixed;
+  text-align: center;
+  top: 18%;
+  left: 30%;
+  background-color: white;
+  border-radius: 10px;
+  height: 40%;
+  width: 40%;
+  min-height: 200px;
+  animation-name: editNoteAnimation;
+  animation-duration: 0.3s;
 }
-.editableTitle{
-	width: 100%;
-  	border: none;
-  	padding: 5px;
-	
-  	outline: none;
-  	font-size: 1.2em;
-  	font-family: inherit;
-  	resize: none;
+.editableTitle {
+  width: 100%;
+  border: none;
+  padding: 5px;
+
+  outline: none;
+  font-size: 1.2em;
+  font-family: inherit;
+  resize: none;
 }
-.editableContent{
-	padding-top: 10px;
-	width:100%;
-	height: 60%;
-	/* height: 100%; */
-	overflow: auto;
+.editableContent {
+  padding-top: 10px;
+  width: 100%;
+  height: 60%;
+  /* height: 100%; */
+  overflow: auto;
 }
-.save{
-	position:absolute;
-	left: 5%;
-	bottom: 2%;
+.save {
+  position: absolute;
+  left: 5%;
+  bottom: 2%;
 }
 
-.close{
-	position:absolute;
-	right: 5%;
-	bottom: 2%;
+.close {
+  position: absolute;
+  right: 5%;
+  bottom: 2%;
 }
-
-

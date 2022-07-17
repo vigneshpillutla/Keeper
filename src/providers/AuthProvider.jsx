@@ -1,5 +1,5 @@
 import UserAuth from 'api/auth.js';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
@@ -18,6 +18,14 @@ const AuthProvider = ({ children }) => {
     setSessionData((prev) => ({ ...prev, ...data }));
   };
 
+  useEffect(() => {
+    if (!user) {
+      modifySessionData({ isLoggedIn: false });
+      return;
+    }
+    modifySessionData({ isLoggedIn: true });
+  }, [user]);
+
   const getUser = async () => {
     modifySessionData({ loading: true });
     const response = await UserAuth.getUser();
@@ -25,7 +33,6 @@ const AuthProvider = ({ children }) => {
     if (response.ok) {
       const res = await response.json();
       setUser(res.user);
-      modifySessionData({ isLoggedIn: true });
     }
     modifySessionData({ loading: false });
   };
@@ -38,7 +45,6 @@ const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         setUser(data.user);
-        modifySessionData({ isLoggedIn: true });
         toast.success('Welcome Back!!');
       } else {
         toast.error(data.msg);
@@ -56,7 +62,6 @@ const AuthProvider = ({ children }) => {
       const message = data.msg;
       if (response.ok) {
         setUser(data.user);
-        modifySessionData({ isLoggedIn: true });
 
         toast.success(message);
       } else {
@@ -71,7 +76,7 @@ const AuthProvider = ({ children }) => {
     const response = await UserAuth.logout();
     if (response.ok) {
       setUser(null);
-      modifySessionData({ loading: false, isLoggedIn: false });
+      modifySessionData({ loading: false });
       toast.success('Sad to see you leave :(');
       return;
     }

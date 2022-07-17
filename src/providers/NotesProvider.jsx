@@ -1,8 +1,10 @@
 import UserNotes from 'api/notes.js';
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const NotesContext = createContext();
+
+const useNotes = () => useContext(NotesContext);
 
 const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
@@ -14,17 +16,22 @@ const NotesProvider = ({ children }) => {
       setNotes(res.data);
       return;
     }
-
-    toast.error('Could not fetch notes!');
   };
 
   const addNote = async (note) => {
-    notes.push(note);
+    const response = await UserNotes.addNote(note);
+    const res = await response.json();
 
-    return UserNotes.addNote(note);
+    if (response.ok) {
+      setNotes((prev) => {
+        const updatedNotes = [...prev];
+        updatedNotes.push(res.data);
+        return updatedNotes;
+      });
+    }
   };
 
-  const updatedNote = async (id, newNote) => {
+  const updateNote = async (id, newNote) => {
     setNotes((prev) =>
       prev.map((note) => {
         if (note.id === id) {
@@ -44,9 +51,10 @@ const NotesProvider = ({ children }) => {
   };
 
   const value = {
+    notes,
     getNotes,
     addNote,
-    updatedNote,
+    updateNote,
     deleteNote
   };
 
@@ -54,5 +62,7 @@ const NotesProvider = ({ children }) => {
     <NotesContext.Provider value={value}>{children}</NotesContext.Provider>
   );
 };
+
+export { useNotes };
 
 export default NotesProvider;

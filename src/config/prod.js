@@ -1,9 +1,5 @@
-/**
- * @FIX_ME
- * Place prod link here.
- */
 const config = {
-  serverDomain: 'http://localhost:5000'
+  serverDomain: 'https://keep-er-api.herokuapp.com'
 };
 
 export default config;
