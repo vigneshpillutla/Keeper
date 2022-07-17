@@ -16,19 +16,15 @@ function Login(props) {
 
   function changeFormData(event) {
     const { value: newValue, name } = event.target;
-    setFormData((prevValue) => {
-      if (name === 'email') {
-        return {
-          ...prevValue,
-          email: newValue
-        };
-      } else {
-        return {
-          ...prevValue,
-          password: newValue
-        };
-      }
-    });
+    if (Object.keys(formData).includes(name)) {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+      return;
+    }
+
+    throw new Error(`Trying to change an invalid input field - ${name}`);
   }
 
   return (
