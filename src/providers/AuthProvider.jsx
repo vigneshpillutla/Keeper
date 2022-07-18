@@ -39,6 +39,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
+      modifySessionData({ loading: true });
       const response = await UserAuth.login(credentials);
 
       const data = await response.json();
@@ -51,11 +52,14 @@ const AuthProvider = ({ children }) => {
       }
     } catch (e) {
       toast.error('Unable to login! Try again later.');
+    } finally {
+      modifySessionData({ loading: false });
     }
   };
 
   const signUp = async (credentials) => {
     try {
+      modifySessionData({ loading: true });
       const response = await UserAuth.signUp(credentials);
 
       const data = await response.json();
@@ -69,10 +73,13 @@ const AuthProvider = ({ children }) => {
       }
     } catch (e) {
       toast.error('Unable to sign up! Try again later.');
+    } finally {
+      modifySessionData({ loading: false });
     }
   };
 
   const logout = async () => {
+    modifySessionData({ loading: true });
     const response = await UserAuth.logout();
     if (response.ok) {
       setUser(null);
@@ -81,6 +88,7 @@ const AuthProvider = ({ children }) => {
       return;
     }
 
+    modifySessionData({ loading: false });
     toast.error('Unable to logout! Hang around a bit longer :)');
   };
 

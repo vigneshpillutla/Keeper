@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import App from './App.jsx';
+import { FullScreenLoader } from 'components/Loading/Loading.jsx';
 
 ReactDOM.render(
   <>
@@ -14,6 +15,7 @@ ReactDOM.render(
       <AuthProvider>
         <NotesProvider>
           <App />
+          <FullScreenLoader dots={4} />
         </NotesProvider>
       </AuthProvider>
       <ToastContainer />

@@ -1,6 +1,10 @@
+import { useAuth } from 'providers/AuthProvider';
 import styles from 'stylesheets/Loading.module.css';
 const Loading = (props) => {
-  const { dots = 4, loading } = props;
+  const { dots = 4 } = props;
+  const {
+    sessionData: { loading }
+  } = useAuth();
   if (!loading) return null;
   return (
     <div className={styles['loader']}>
@@ -17,7 +21,9 @@ const Loading = (props) => {
 };
 
 const FullScreenLoader = (props) => {
-  const { loading } = props;
+  const {
+    sessionData: { loading }
+  } = useAuth();
   if (!loading) return null;
   return (
     <div className={styles['fullscreen']}>
