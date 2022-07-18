@@ -6,6 +6,7 @@ import { useNotes } from 'providers/NotesProvider';
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import NewNote from './NewNote';
+import { FullScreenLoader } from './Loading/Loading';
 
 const Home = () => {
   const auth = useAuth();
@@ -35,6 +36,7 @@ const Home = () => {
   if (!loading && !isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
+
   return (
     <div>
       <Header />
@@ -47,6 +49,7 @@ const Home = () => {
         />
       ))}
       <EditableNote {...editableNote} onBackgroundClick={hideEditableNote} />
+      <FullScreenLoader dots={4} loading={loading} />
     </div>
   );
 };

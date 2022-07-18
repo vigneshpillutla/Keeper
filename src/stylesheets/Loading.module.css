@@ -1,0 +1,42 @@
+@keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.5);
+  }
+  50% {
+    transform: scale(1.75);
+  }
+  75% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.loader {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+span {
+  height: 10px;
+  width: 10px;
+  margin-right: 20px;
+  border-radius: 50%;
+  background-color: #36a15d;
+  animation: loading 1s linear infinite;
+}
+
+.fullscreen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  filter: opacity(0.5);
+  background-color: #ffffff;
+}

@@ -1,3 +1,6 @@
+:root {
+  --yellow: #f5ba13;
+}
 ::-webkit-scrollbar {
   width: 5px;
 }
