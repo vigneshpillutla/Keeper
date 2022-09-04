@@ -95,6 +95,7 @@ const AuthProvider = ({ children }) => {
   const value = {
     user,
     sessionData,
+    modifySessionData,
     getUser,
     login,
     logout,

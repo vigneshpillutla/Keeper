@@ -1,6 +1,7 @@
 import UserNotes from 'api/notes.js';
 import { createContext, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useAuth } from './AuthProvider';
 
 const NotesContext = createContext();
 
@@ -8,7 +9,7 @@ const useNotes = () => useContext(NotesContext);
 
 const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
-
+  const { modifySessionData } = useAuth();
   const getNotes = async () => {
     const response = await UserNotes.getNotes();
     const res = await response.json();
@@ -19,9 +20,10 @@ const NotesProvider = ({ children }) => {
   };
 
   const addNote = async (note) => {
+    modifySessionData({ loading: true });
     const response = await UserNotes.addNote(note);
     const res = await response.json();
-
+    modifySessionData({ loading: false });
     if (response.ok) {
       setNotes((prev) => {
         const updatedNotes = [...prev];
